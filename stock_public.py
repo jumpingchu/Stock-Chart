@@ -25,7 +25,7 @@ def get_data(url, columns):
     df = df[df['報酬率(%)'].astype(float) > 10]
 
     # 新增欄位: 轉帳金額
-    df['轉帳金額'] = df['承銷價'].astype(float) * int(df['申購張數']) * 1000 + 70
+    df['轉帳金額'] = df['承銷價'].astype(float) * df['申購張數'].astype(int) * 1000 + 70
 
     # 新增欄位: 預約轉帳日
     two_days = datetime.timedelta(2)
@@ -55,7 +55,7 @@ def main():
     df = get_data(url, columns)
     df.index += 1   # 讓使用者看到 1,2,3,4...而不是0,1,2,3...
     to_jsonfile(df)
-    print(df[['股票代號', '名稱']])
+    print(df[['股票代號', '名稱', '報酬率(%)']])
 
     switch = True
     stock_list = []
